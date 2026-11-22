@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="考研兔 — 一站式考研资源站，课程目录、笔记网盘群、更新日志，助你稳稳上岸。">
+<title>考研兔 · kaoyantu.com</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐰</text></svg>">
+<style>
+  :root{
+    --ink:#1a1a2e;
+    --muted:#6b6b82;
+    --purple:#7c5cfc;
+    --pink:#ff5c8a;
+    --orange:#ff9a3c;
+    --teal:#12c8a0;
+    --bg:#f7f6fc;
+    --card:#ffffff;
+    --line:#eeeaf8;
+    --shadow:0 18px 50px -18px rgba(70,50,140,.28);
+    --radius:24px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    line-height:1.5;
+  }
+
+  /* 背景装饰 */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:-2;
+    background-image:radial-gradient(#d9d4f0 1.1px,transparent 1.1px);
+    background-size:24px 24px;opacity:.55;
+  }
+  .blob{position:fixed;border-radius:50%;filter:blur(100px);z-index:-1;pointer-events:none}
+  .blob.a{width:420px;height:420px;background:#c9b8ff;top:-140px;left:-120px;opacity:.55}
+  .blob.b{width:380px;height:380px;background:#ffb8cf;top:80px;right:-140px;opacity:.45}
+  .blob.c{width:460px;height:460px;background:#b8f2e2;bottom:-200px;left:30%;opacity:.4}
+
+  .wrap{width:min(1120px,92vw);margin:0 auto}
+
+  /* 导航栏 */
+  .navbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(247,246,252,.82);
+    backdrop-filter:saturate(180%) blur(18px);
+    -webkit-backdrop-filter:saturate(180%) blur(18px);
+    border-bottom:1px solid rgba(124,92,252,.1);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+  .brand svg{width:42px;height:42px;flex:none}
+  .brand-name{font-size:22px;font-weight:900;letter-spacing:1px;
+    background:linear-gradient(100deg,var(--purple),var(--pink));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .nav-badge{
+    display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--muted);
+    background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 16px;
+    box-shadow:0 6px 18px -10px rgba(70,50,140,.3);
+  }
+  .nav-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--teal);
+    box-shadow:0 0 0 4px rgba(18,200,160,.15);animation:pulse 2s infinite}
+  @keyframes pulse{50%{box-shadow:0 0 0 8px rgba(18,200,160,0)}}
+
+  /* Hero */
+  .hero{text-align:center;padding:52px 0 26px;position:relative}
+  .hero .kicker{
+    display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:800;letter-spacing:2px;
+    color:var(--purple);background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.18);
+    padding:7px 16px;border-radius:999px;margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(58px,11vw,118px);line-height:1;font-weight:900;letter-spacing:-3px;
+    background:linear-gradient(115deg,var(--purple) 0%,#9b6cff 35%,var(--pink) 70%,var(--orange) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 10px 24px rgba(124,92,252,.18));
+  }
+  .domain{
+    display:inline-block;margin-top:18px;font-size:clamp(22px,4vw,34px);font-weight:900;letter-spacing:3px;
+    color:#fff;background:linear-gradient(100deg,#2b2450,#4a3a8f);
+    padding:10px 30px;border-radius:16px;
+    box-shadow:0 14px 30px -10px rgba(43,36,80,.55),inset 0 1px 0 rgba(255,255,255,.25);
+    position:relative;
+  }
+  .domain::after{
+    content:"";position:absolute;inset:0;border-radius:16px;padding:2px;
+    background:linear-gradient(100deg,var(--purple),var(--pink),var(--orange));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;
+  }
+  .hero .slogan{margin-top:20px;font-size:15px;color:var(--muted);font-weight:600}
+  .hero .slogan b{color:var(--pink)}
+
+  /* 卡片区 */
+  .section-title{display:flex;align-items:center;gap:12px;margin:20px 0 18px}
+  .section-title h2{font-size:20px;font-weight:900}
+  .section-title .bar{width:34px;height:5px;border-radius:5px;background:linear-gradient(90deg,var(--purple),var(--pink))}
+  .section-title .hint{margin-left:auto;font-size:13px;color:var(--muted);font-weight:600}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .card{
+    position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 24px;overflow:hidden;
+    box-shadow:0 10px 30px -20px rgba(70,50,140,.35);
+    transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s;
+    --c:var(--purple);
+  }
+  .card::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:4px;
+    background:linear-gradient(90deg,var(--c),transparent);
+  }
+  .card::after{
+    content:"";position:absolute;width:160px;height:160px;border-radius:50%;
+    right:-60px;top:-60px;background:var(--c);opacity:.07;transition:transform .4s;
+  }
+  .card:hover{transform:translateY(-8px);box-shadow:var(--shadow)}
+  .card:hover::after{transform:scale(1.35)}
+  .card.c2{--c:var(--pink)}
+  .card.c3{--c:var(--teal)}
+
+  .card-top{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+  .icon{
+    width:52px;height:52px;flex:none;border-radius:16px;display:grid;place-items:center;
+    background:color-mix(in srgb,var(--c) 12%,#fff);color:var(--c);
+    box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c) 20%,#fff);
+  }
+  .icon svg{width:27px;height:27px}
+  .card h3{font-size:20px;font-weight:900;letter-spacing:.5px}
+  .card .desc{font-size:13.5px;color:var(--muted);font-weight:600;margin-bottom:18px;min-height:40px}
+
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+  .tag{font-size:13px;font-weight:800;padding:6px 13px;border-radius:10px;background:var(--tbg);color:var(--tc)}
+  .t1{--tbg:#efeaff;--tc:#7048e8}.t2{--tbg:#e6f7f0;--tc:#0a9c78}
+  .t3{--tbg:#fff0e6;--tc:#e07b1a}.t4{--tbg:#ffe9ef;--tc:#e5385f}
+  .t5{--tbg:#e8f1ff;--tc:#3573d4}.t6{--tbg:#f0ecff;--tc:#6a4bd6}
+  .t7{--tbg:#fff4dd;--tc:#c4870b}.t8{--tbg:#e6faf6;--tc:#0e9e8a}
+  .t9{--tbg:#fdeaff;--tc:#b52fb5}
+
+  .card-foot{display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:16px;
+    font-size:14px;font-weight:800;color:var(--c)}
+  .card-foot .arrow{transition:transform .25s}
+  .card:hover .card-foot .arrow{transform:translateX(5px)}
+
+  /* 页尾 */
+  footer{
+    margin-top:44px;background:linear-gradient(120deg,#221c45,#3a2f7a 60%,#5b3f9e);
+    color:#fff;position:relative;overflow:hidden;
+  }
+  footer::before{
+    content:"";position:absolute;inset:0;
+    background-image:radial-gradient(rgba(255,255,255,.15) 1px,transparent 1px);
+    background-size:22px 22px;opacity:.5;
+  }
+  .foot-inner{position:relative;display:flex;align-items:center;justify-content:space-between;
+    gap:26px;padding:38px 0;flex-wrap:wrap}
+  .qq-box{display:flex;flex-direction:column;gap:8px}
+  .qq-label{font-size:13px;color:rgba(255,255,255,.7);font-weight:700;letter-spacing:1px}
+  .qq-num{
+    display:inline-flex;align-items:center;gap:10px;width:fit-content;cursor:pointer;
+    font-size:24px;font-weight:900;letter-spacing:.5px;color:#fff;
+    border-bottom:2px dashed rgba(255,255,255,.5);padding-bottom:3px;
+    transition:color .2s,gap .2s;user-select:none;
+  }
+  .qq-num:hover{color:#ffd36e;gap:14px}
+  .qq-num svg{width:20px;height:20px;opacity:.85}
+  .qq-tip{font-size:12px;color:rgba(255,255,255,.6)}
+  .foot-domain{text-align:right}
+  .foot-domain small{display:block;font-size:12px;color:rgba(255,255,255,.65);letter-spacing:2px;margin-bottom:6px;font-weight:700}
+  .foot-domain strong{
+    font-size:clamp(30px,5vw,46px);font-weight:900;letter-spacing:2px;
+    background:linear-gradient(100deg,#ffd36e,#ff8fb0,#8fd8ff);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 6px 14px rgba(0,0,0,.25));
+  }
+  .copyright{position:relative;text-align:center;font-size:12px;color:rgba(255,255,255,.45);
+    padding-bottom:20px}
+
+  /* Toast */
+  .toast{
+    position:fixed;left:50%;bottom:40px;transform:translate(-50%,30px);
+    background:#1a1a2e;color:#fff;font-size:15px;font-weight:800;
+    padding:14px 26px;border-radius:14px;box-shadow:0 16px 40px -10px rgba(0,0,0,.5);
+    opacity:0;pointer-events:none;transition:.3s cubic-bezier(.2,.8,.2,1);z-index:100;
+    display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.12);
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+  .toast svg{width:20px;height:20px;color:var(--teal)}
+
+  /* 耳朵动画 */
+  .earL{transform-origin:21px 30px;animation:wiggleL 4s ease-in-out infinite}
+  .earR{transform-origin:43px 30px;animation:wiggleR 4s ease-in-out infinite .3s}
+  @keyframes wiggleL{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(-4deg)}}
+  @keyframes wiggleR{0%,100%{transform:rotate(12deg)}50%{transform:rotate(4deg)}}
+
+  /* 响应式 */
+  @media(max-width:860px){
+    .cards{grid-template-columns:repeat(2,1fr)}
+    .card:first-child{grid-column:1/-1}
+  }
+  @media(max-width:560px){
+    .nav-badge{display:none}
+    .hero{padding:40px 0 20px}
+    .hero h1{letter-spacing:-2px}
+    .cards{grid-template-columns:1fr;gap:16px}
+    .card:first-child{grid-column:auto}
+    .section-title .hint{display:none}
+    .foot-inner{flex-direction:column;align-items:flex-start}
+    .foot-domain{text-align:left}
+    .qq-num{font-size:21px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+  }
+</style>
+</head>
+<body>
+  <div class="blob a"></div><div class="blob b"></div><div class="blob c"></div>
+
+  <!-- 导航栏 -->
+  <header class="navbar">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="考研兔 首页">
+        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="bunny" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#8b6cff"/><stop offset="1" stop-color="#ff5c8a"/>
+            </linearGradient>
+          </defs>
+          <g class="earL">
+            <ellipse cx="21" cy="17" rx="6.5" ry="13" transform="rotate(-12 21 17)" fill="url(#bunny)"/>
+            <ellipse cx="21" cy="17" rx="2.6" ry="8" transform="rotate(-12 21 17)" fill="#fff" opacity=".5"/>
+          </g>
+          <g class="earR">
+            <ellipse cx="43" cy="17" rx="6.5" ry="13" transform="rotate(12 43 17)" fill="url(#bunny)"/>
+            <ellipse cx="43" cy="17" rx="2.6" ry="8" transform="rotate(12 43 17)" fill="#fff" opacity=".5"/>
+          </g>
+          <circle cx="32" cy="41" r="18" fill="url(#bunny)"/>
+          <circle cx="25.5" cy="40" r="2.5" fill="#1a1a2e"/>
+          <circle cx="38.5" cy="40" r="2.5" fill="#1a1a2e"/>
+          <circle cx="26.3" cy="39.2" r=".85" fill="#fff"/>
+          <circle cx="39.3" cy="39.2" r=".85" fill="#fff"/>
+          <ellipse cx="20.5" cy="46" rx="3" ry="1.8" fill="#ff8fb0" opacity=".85"/>
+          <ellipse cx="43.5" cy="46" rx="3" ry="1.8" fill="#ff8fb0" opacity=".85"/>
+          <path d="M29.5 45 L34.5 45 L32 47.8 Z" fill="#1a1a2e"/>
+          <path d="M32 47.8 v1.6 M32 49.4 q-2 2.4 -4 0 M32 49.4 q2 2.4 4 0"
+                stroke="#1a1a2e" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-name">考研兔</span>
+      </a>
+      <div class="nav-badge"><span class="dot"></span>备考一站通 · 一起上岸</div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero wrap">
+      <span class="kicker">✦ 你的考研资源补给站</span>
+      <h1>考研兔</h1>
+      <div class="domain">kaoyantu.com</div>
+      <p class="slogan">全科资料一站集齐，备考路上 <b>稳稳上岸</b></p>
+    </section>
+
+    <section class="wrap">
+      <div class="section-title">
+        <span class="bar"></span><h2>资源导航</h2>
+        <span class="hint">点击卡片，跳转查看完整内容 →</span>
+      </div>
+
+      <div class="cards">
+        <!-- 考研课程目录 -->
+        <a class="card c1" href="https://docs.qq.com/doc/DUGZLbGFEVEpFdVNy" target="_blank" rel="noopener noreferrer">
+          <div class="card-top">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
+            </div>
+            <h3>考研课程目录</h3>
+          </div>
+          <p class="desc">从基础到冲刺，备考全科一站集齐</p>
+          <div class="tags">
+            <span class="tag t1">英语</span><span class="tag t2">数学</span><span class="tag t3">政治</span>
+            <span class="tag t4">管理类联考</span><span class="tag t5">专业课</span><span class="tag t6">笔试</span>
+            <span class="tag t7">冲刺</span><span class="tag t8">押题</span><span class="tag t9">复试</span>
+          </div>
+          <div class="card-foot">查看完整目录 <span class="arrow">→</span></div>
+        </a>
+
+        <!-- 笔记网盘群 -->
+        <a class="card c2" href="https://docs.qq.com/doc/DUHRPa0JXUkxSTU5h" target="_blank" rel="noopener noreferrer">
+          <div class="card-top">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <h3>免费笔记网盘群</h3>
+          </div>
+          <p class="desc">精选笔记持续更新，加入群组随时取用</p>
+          <div class="card-foot">进群获取 <span class="arrow">→</span></div>
+        </a>
+
+        <!-- 课程更新日志 -->
+        <a class="card c3" href="https://docs.qq.com/doc/DUGZCYVRtSEdPeWFD" target="_blank" rel="noopener noreferrer">
+          <div class="card-top">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <h3>课程更新日志</h3>
+          </div>
+          <p class="desc">每次上新都有记录，最新动态一手掌握</p>
+          <div class="card-foot">查看更新 <span class="arrow">→</span></div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-inner">
+        <div class="qq-box">
+          <span class="qq-label">联系QQ</span>
+          <span class="qq-num" id="qq-copy" role="button" tabindex="0" aria-label="点击复制QQ号码">
+            考研QQ1024687680
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+          </span>
+          <span class="qq-tip">点击上方号码即可复制</span>
+        </div>
+        <div class="foot-domain">
+          <small>官 方 网 址</small>
+          <strong>kaoyantu.com</strong>
+        </div>
+      </div>
+      <div class="copyright">© 考研兔 · 用心陪伴每一段上岸之路</div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 6 9 17l-5-5"/>
+    </svg>
+    <span>QQ已复制</span>
+  </div>
+
+  <script>
+    (function(){
+      var btn = document.getElementById('qq-copy');
+      var toast = document.getElementById('toast');
+      var timer;
+      var QQ = '1024687680';
+
+      function showToast(){
+        toast.classList.add('show');
+        clearTimeout(timer);
+        timer = setTimeout(function(){ toast.classList.remove('show'); }, 2200);
+      }
+
+      function fallbackCopy(text){
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.top = '-9999px';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try{ document.execCommand('copy'); }catch(e){}
+        document.body.removeChild(ta);
+      }
+
+      function copy(){
+        if(navigator.clipboard && window.isSecureContext){
+          navigator.clipboard.writeText(QQ).then(showToast).catch(function(){ fallbackCopy(QQ); showToast(); });
+        }else{
+          fallbackCopy(QQ);
+          showToast();
+        }
+      }
+
+      btn.addEventListener('click', copy);
+      btn.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); copy(); }
+      });
+    })();
+  </script>
+</body>
+</html>
